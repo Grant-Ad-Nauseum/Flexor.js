@@ -117,11 +117,9 @@ function resetStyles(container) {
   container.style.resize = 'horizontal';
   container.style.overflow = 'auto';
   container.style.width = '100%';
-  container.style.minHeight = '200px';
-  container.style.maxHeight = '400px';
+  container.style.maxHeight = '400px'; // No min-height to avoid forcing stretch
   Array.from(container.children).forEach(child => {
     child.removeAttribute('style');
-    child.style.height = 'auto'; // Reset height for intrinsic measurement
     child.style.padding = '20px';
     child.style.textAlign = 'center';
     child.style.borderRadius = '8px';
@@ -148,37 +146,6 @@ function updateDemo() {
   demoContainer.setAttribute('data-flexor', dataFlexor);
   configOutput.textContent = `data-flexor="${dataFlexor}"`;
   Flexor.applyTo(demoContainer);
-  
-  // Protect equal-heights from flexbox overrides
-  if (activePlugins.includes('equal-heights')) {
-    const children = Array.from(demoContainer.children);
-    const sandbox = document.createElement('div');
-    sandbox.style.position = 'absolute';
-    sandbox.style.visibility = 'hidden';
-    sandbox.style.display = 'block';
-    document.body.appendChild(sandbox);
-    
-    const clones = children.map(child => {
-      const clone = child.cloneNode(true);
-      clone.style.height = 'auto';
-      clone.style.flex = 'none';
-      clone.style.display = 'block';
-      sandbox.appendChild(clone);
-      return clone;
-    });
-    const naturalHeights = clones.map(clone => clone.getBoundingClientRect().height);
-    const maxHeight = Math.max(...naturalHeights);
-    sandbox.remove();
-    
-    children.forEach((child, i) => {
-      child.style.height = `${maxHeight}px`;
-      child.style.minHeight = `${maxHeight}px`;
-      child.style.maxHeight = `${maxHeight}px`;
-      child.style.flex = config.proportions 
-        ? `${config.proportions[i] || 1} 0 ${maxHeight}px`
-        : `1 0 ${maxHeight}px`;
-    });
-  }
 }
 
 clearPluginsBtn.addEventListener('click', () => location.reload(true));
