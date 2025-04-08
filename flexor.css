@@ -1,0 +1,34 @@
+/* Fallback for no-JS scenarios */
+[data-flexor] {
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+  }
+  
+  /* Predefined stacking for mobile (max-width: 600px) */
+  .stack-mobile,
+  .stack-600 {
+    @media (max-width: 600px) {
+      flex-direction: column !important;
+    }
+    @media (max-width: 600px) {
+      > * {
+        flex: auto !important;
+        width: 100% !important;
+      }
+    }
+  }
+  
+  /* Predefined stacking for tablet (max-width: 768px) */
+  .stack-tablet,
+  .stack-768 {
+    @media (max-width: 768px) {
+      flex-direction: column !important;
+    }
+    @media (max-width: 768px) {
+      > * {
+        flex: auto !important;
+        width: 100% !important;
+      }
+    }
+  }
