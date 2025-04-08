@@ -172,17 +172,17 @@ flexor-ai-layout-plugin.js
 flexor-component-export-plugin.js
 
 
-Contributing
-We’d love your help! To contribute:
-Fork the repo.
+**Contributing**
 
-Clone your fork: git clone https://github.com/yourusername/flexor.js.git.
+**We’d love your help! To contribute:
+Fork the repo.**__
+
+Clone your fork: git clone https://github.com/Grant-Ad-Nauseum/flexor.js.git.
 
 Edit flexor.js, flexor.css, or add plugins to the plugins subfolder.
 
 Test your changes and submit a pull request.
 
-Check CONTRIBUTING.md for more details.
 
 
 **License**
