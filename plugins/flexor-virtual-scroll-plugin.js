@@ -1,25 +1,31 @@
 Flexor.registerPlugin('virtual-scroll', (container, config) => {
-    const itemHeight = 50; // Fixed height per item
-    const totalItems = 1000; // Example dataset size
-    container.style.overflowY = 'auto';
-    container.style.height = '400px';
-  
-    const updateVisible = () => {
-      const scrollTop = container.scrollTop;
-      const visibleCount = Math.ceil(container.clientHeight / itemHeight);
-      const startIndex = Math.floor(scrollTop / itemHeight);
-      const endIndex = Math.min(startIndex + visibleCount, totalItems);
-  
-      container.innerHTML = '';
-      for (let i = startIndex; i < endIndex; i++) {
-        const child = document.createElement('div');
-        child.textContent = `Item ${i + 1}`;
-        child.style.height = `${itemHeight}px`;
-        container.appendChild(child);
-      }
-      container.style.paddingTop = `${startIndex * itemHeight}px`;
-    };
-  
-    updateVisible();
-    container.addEventListener('scroll', updateVisible);
+  const itemHeight = 50;
+  const visibleItems = Math.ceil(container.offsetHeight / itemHeight) + 2;
+  const totalItems = 100;
+  let startIndex = 0;
+
+  container.style.overflowY = 'auto';
+  container.style.position = 'relative';
+
+  const renderItems = () => {
+    const endIndex = Math.min(startIndex + visibleItems, totalItems);
+    const fragment = document.createDocumentFragment();
+    for (let i = startIndex; i < endIndex; i++) {
+      const item = document.createElement('div');
+      item.textContent = `Virtual Item ${i + 1}`;
+      item.style.height = `${itemHeight}px`;
+      item.style.background = i % 2 ? '#eee' : '#fff';
+      item.style.position = 'absolute';
+      item.style.top = `${i * itemHeight}px`;
+      item.style.width = '100%';
+      fragment.appendChild(item);
+    }
+    container.appendChild(fragment); // Append instead of replace
+  };
+
+  container.addEventListener('scroll', () => {
+    startIndex = Math.floor(container.scrollTop / itemHeight);
+    renderItems();
   });
+  renderItems();
+});
