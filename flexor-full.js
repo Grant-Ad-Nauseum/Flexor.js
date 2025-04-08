@@ -112,7 +112,8 @@ const Flexor = {
   Flexor.registerPlugin('equal-heights', (container, config) => {
     const children = Array.from(container.children);
     const resizeObserver = new ResizeObserver(() => {
-      const maxHeight = Math.max(...children.map(child => child.scrollHeight));
+      children.forEach(child => child.style.height = 'auto'); // Reset to natural height first
+      const maxHeight = Math.max(...children.map(child => child.offsetHeight));
       children.forEach(child => child.style.height = `${maxHeight}px`);
     });
     resizeObserver.observe(container);
