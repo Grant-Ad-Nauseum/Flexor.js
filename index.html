@@ -15,6 +15,9 @@
       --accent-color: #3b82f6;
       --hover-color: #2563eb;
       --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --warning-bg: #fef3c7;
+      --warning-border: #f59e0b;
+      --warning-text: #92400e;
     }
     body {
       font-family: 'Inter', sans-serif;
@@ -149,6 +152,22 @@
       max-width: 600px;
       margin: 15px auto 0;
     }
+    #warning-box {
+      background: var(--warning-bg);
+      border: 2px solid var(--warning-border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 40px;
+      color: var(--warning-text);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      box-shadow: var(--shadow);
+    }
+    #warning-box h3 {
+      margin: 0 0 10px;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
@@ -196,6 +215,11 @@
     <div id="config-section">
       <h2>Current Config</h2>
       <div id="config-output">data-flexor="flex row gap-10px"</div>
+    </div>
+
+    <div id="warning-box">
+      <h3>Compatibility Warning</h3>
+      <p>In a GitHub Pages testing environment, several Flexor.js plugins from <code>flexor-full.js</code> won’t work fully or at all due to inherent limitations: <code>voice-control</code> fails because the Web Speech API (SpeechRecognition) is not supported consistently across all browsers and requires user permission that may not be granted seamlessly in a static context; <code>collaborative-edit</code> doesn’t function as it relies on a WebSocket connection to an external server (e.g., <code>wss://example.com/flexor-collab</code>), which GitHub Pages cannot provide natively; <code>offline-cache</code> is severely limited because, while service workers are supported on GitHub Pages, registering a custom <code>/flexor-sw.js</code> requires it to be included in the repo and scoped correctly, and the demo doesn’t bundle this file, rendering offline caching ineffective without additional setup; <code>state-manager</code> has partial issues since it uses <code>localStorage</code>, which works but may not persist meaningfully in a demo context if the page is refreshed or if storage is cleared; and <code>undo-redo</code> struggles because its <code>DOMSubtreeModified</code> listener can conflict with other plugins (e.g., <code>virtual-scroll</code>) that replace <code>innerHTML</code>, causing history tracking to break unless carefully managed.</p>
     </div>
   </div>
 
