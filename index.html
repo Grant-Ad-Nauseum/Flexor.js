@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flexor.js Demo - Grant-Ad-Nause coilsum</title>
+  <title>Flexor.js Demo - Grant-Ad-Nauseum</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Grant-Ad-Nauseum/flexor.js@latest/flexor.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
@@ -59,7 +59,7 @@
       overflow: auto;
       width: 100%;
       min-height: 200px;
-      max-height: 400px; /* Added to ensure scrollable context */
+      max-height: 400px;
       transition: all 0.3s ease;
     }
     .demo-item {
@@ -67,7 +67,7 @@
       text-align: center;
       border-radius: 8px;
       transition: transform 0.2s ease;
-      min-width: 100px; /* For snap-grid visibility */
+      min-width: 100px;
     }
     .demo-item:hover {
       transform: scale(1.05);
@@ -131,18 +131,19 @@
       padding: 8px 12px;
       border-radius: 6px;
       position: absolute;
-      z-index: 10;
-      top: 100%;
+      z-index: 100;
+      top: calc(100% + 5px);
       left: 50%;
       transform: translateX(-50%);
       font-size: 0.85rem;
       white-space: nowrap;
       opacity: 0;
-      transition: opacity 0.2s ease;
+      transition: opacity 0.2s ease, visibility 0s linear 0.2s;
     }
     #plugin-list label:hover .tooltip {
       visibility: visible;
       opacity: 1;
+      transition: opacity 0.2s ease;
     }
     button {
       background: var(--accent-color);
@@ -160,9 +161,13 @@
     #clear-plugins {
       background: #ef4444;
       margin-top: 15px;
+      position: relative;
+      z-index: 10;
+      padding: 10px 20px;
     }
     #clear-plugins:hover {
       background: #dc2626;
+      cursor: pointer;
     }
     #config-section {
       margin-top: 40px;
@@ -232,7 +237,6 @@
       <div class="panel">
         <h2>Plugins (50 Total)</h2>
         <div id="plugin-list">
-          <!-- Checkboxes added dynamically -->
         </div>
         <button id="clear-plugins">Reset Demo</button>
       </div>
