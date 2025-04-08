@@ -14,7 +14,7 @@ Streamline your layouts with a tool that’s as flexible as you are._
 
 **Attribute-Driven**: Configure layouts in HTML using data-flexor (e.g., flex row gap-10px stack-500px).
 
-**Plugin-Powered**: 50 built-in plugins for everything from real-time resizing to performance optimization.
+**Plugin-Powered**: currently 50 plugins for everything from real-time resizing to performance optimization.
 
 **Responsive Design**: Native stacking and proportions, enhanced by modern APIs like Container Queries.
 
