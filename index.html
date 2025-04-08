@@ -18,6 +18,8 @@
       --warning-bg: #fef3c7;
       --warning-border: #f59e0b;
       --warning-text: #92400e;
+      --tooltip-bg: #1f2937;
+      --tooltip-text: #ffffff;
     }
     body {
       font-family: 'Inter', sans-serif;
@@ -111,12 +113,34 @@
       padding-right: 10px;
     }
     #plugin-list label {
+      position: relative;
       padding: 8px;
       border-radius: 6px;
       transition: background 0.2s ease;
+      cursor: pointer;
     }
     #plugin-list label:hover {
       background: #f1f5f9;
+    }
+    .tooltip {
+      visibility: hidden;
+      background: var(--tooltip-bg);
+      color: var(--tooltip-text);
+      padding: 8px 12px;
+      border-radius: 6px;
+      position: absolute;
+      z-index: 10;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.85rem;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    #plugin-list label:hover .tooltip {
+      visibility: visible;
+      opacity: 1;
     }
     button {
       background: var(--accent-color);
