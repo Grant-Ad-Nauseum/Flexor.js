@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flexor.js Demo - Grant-Ad-Nauseum</title>
+  <title>Flexor.js Demo - Grant-Ad-Nause coilsum</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Grant-Ad-Nauseum/flexor.js@latest/flexor.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
@@ -59,6 +59,7 @@
       overflow: auto;
       width: 100%;
       min-height: 200px;
+      max-height: 400px; /* Added to ensure scrollable context */
       transition: all 0.3s ease;
     }
     .demo-item {
@@ -66,6 +67,7 @@
       text-align: center;
       border-radius: 8px;
       transition: transform 0.2s ease;
+      min-width: 100px; /* For snap-grid visibility */
     }
     .demo-item:hover {
       transform: scale(1.05);
@@ -232,7 +234,7 @@
         <div id="plugin-list">
           <!-- Checkboxes added dynamically -->
         </div>
-        <button id="clear-plugins">Clear Plugins</button>
+        <button id="clear-plugins">Reset Demo</button>
       </div>
     </div>
 
