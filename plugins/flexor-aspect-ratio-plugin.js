@@ -1,11 +1,10 @@
 Flexor.registerPlugin('aspect-ratio', (container, config) => {
-    const [width, height] = [16, 9]; // Default 16:9 ratio
-    const applyRatio = () => {
-      const containerWidth = container.offsetWidth;
-      container.style.height = `${(containerWidth * height) / width}px`;
-      container.style.overflow = 'hidden';
-    };
-  
-    applyRatio();
-    window.addEventListener('resize', applyRatio);
+  Array.from(container.children).forEach(child => {
+    child.style.aspectRatio = '1 / 1';
+    child.style.maxWidth = '200px'; // Constrain width
+    const observer = new ResizeObserver(() => {
+      child.style.height = `${child.offsetWidth}px`;
+    });
+    observer.observe(child);
   });
+});
