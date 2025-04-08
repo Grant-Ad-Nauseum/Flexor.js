@@ -25,13 +25,6 @@ Streamline your layouts with a tool that’s as flexible as you are._
 
 **Installation**
 
-Via CDN
-Add Flexor to your project directly from GitHub via jsDelivr:
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Grant-Ad-Nauseum/flexor.js@latest/flexor.css">
-<script src="https://cdn.jsdelivr.net/gh/Grant-Ad-Nauseum/flexor.js@latest/flexor.js"></script>
-
-
 Manual Download
 Visit the Releases page on GitHub.
 
