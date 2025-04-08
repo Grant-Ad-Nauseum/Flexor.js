@@ -125,25 +125,22 @@
       background: #f1f5f9;
     }
     .tooltip {
-      visibility: hidden;
+      display: none;
       background: var(--tooltip-bg);
       color: var(--tooltip-text);
       padding: 8px 12px;
       border-radius: 6px;
       position: absolute;
-      z-index: 100;
+      z-index: 1000;
       top: calc(100% + 5px);
       left: 50%;
       transform: translateX(-50%);
       font-size: 0.85rem;
       white-space: nowrap;
-      opacity: 0;
-      transition: opacity 0.2s ease, visibility 0s linear 0.2s;
+      pointer-events: none;
     }
     #plugin-list label:hover .tooltip {
-      visibility: visible;
-      opacity: 1;
-      transition: opacity 0.2s ease;
+      display: block;
     }
     button {
       background: var(--accent-color);
@@ -238,7 +235,7 @@
         <h2>Plugins (50 Total)</h2>
         <div id="plugin-list">
         </div>
-        <button id="clear-plugins">Reset Demo</button>
+        <button id="clear-plugins" onclick="location.reload(true)">Reset Demo</button>
       </div>
     </div>
 
