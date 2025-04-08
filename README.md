@@ -62,13 +62,8 @@ Open flexor.js in a text editor.
 
 Copy the plugin’s code (e.g., the Flexor.registerPlugin block) and paste it into flexor.js in the plugin location
 
-// Plugin registry
-    plugins: {},
-  
-    // Register a plugin
-    registerPlugin: function(name, pluginFn) {
-      this.plugins[name] = pluginFn;
-    },
+![Screenshot from 2025-04-08 03-34-50](https://github.com/user-attachments/assets/c11857a6-533a-46e0-8cf6-59ac348126ee)
+
 
 Save flexor.js and use the plugin in your HTML:
 
