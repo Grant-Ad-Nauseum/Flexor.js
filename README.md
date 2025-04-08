@@ -196,5 +196,5 @@ Discussions: Join us here.
 
 Star: Like what you see? Star the repo!
 
-Created with  by Grant-Ad-Nauseum. Let’s build better layouts together!
+Created with <3 by Grant-Ad-Nauseum. Let’s build better layouts together!
 
