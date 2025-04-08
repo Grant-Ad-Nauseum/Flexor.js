@@ -114,13 +114,22 @@ const Flexor = {
   
   Flexor.registerPlugin('equal-heights', (container, config) => {
     const children = Array.from(container.children);
-    const resizeObserver = new ResizeObserver(() => {
-      children.forEach(child => child.style.height = 'auto');
-      const maxHeight = Math.max(...children.map(child => child.clientHeight));
-      children.forEach(child => child.style.height = `${maxHeight}px`);
-    });
+    let timeout;
+    const updateHeights = () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        children.forEach(child => child.style.height = 'auto');
+        const heights = children.map(child => child.offsetHeight);
+        const maxHeight = Math.max(...heights);
+        if (heights.some(h => h !== maxHeight)) {
+          children.forEach(child => child.style.height = `${maxHeight}px`);
+        }
+      }, 50);
+    };
+    const resizeObserver = new ResizeObserver(updateHeights);
     resizeObserver.observe(container);
     children.forEach(child => resizeObserver.observe(child));
+    updateHeights();
   });
   
   Flexor.registerPlugin('infinite-scroll', (container, config) => {
