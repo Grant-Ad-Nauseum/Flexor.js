@@ -175,7 +175,7 @@ flexor-component-export-plugin.js
 **Contributing**
 
 **We’d love your help! To contribute:
-Fork the repo.**__
+Fork the repo.**
 
 Clone your fork: git clone https://github.com/Grant-Ad-Nauseum/flexor.js.git.
 
