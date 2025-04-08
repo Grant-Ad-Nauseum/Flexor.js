@@ -11,6 +11,21 @@ const availablePlugins = [
   'offline-cache', 'motion-path', 'ssr-prep', 'ai-layout', 'component-export'
 ];
 
+// Initial state
+const initialState = {
+  direction: 'row',
+  gap: '10px',
+  proportions: '1 1 1',
+  stack: '',
+  wrap: false,
+  plugins: [],
+  html: `
+    <div class="demo-item" style="background: #60a5fa;">Item 1</div>
+    <div class="demo-item" style="background: #34d399;">Item 2</div>
+    <div class="demo-item" style="background: #f87171;">Item 3</div>
+  `
+};
+
 // Populate plugin checkboxes
 const pluginList = document.getElementById('plugin-list');
 availablePlugins.forEach(plugin => {
@@ -51,20 +66,8 @@ function updateDemo() {
   Flexor.applyTo(demoContainer);
 }
 
-// Clear plugins function
+// Clear plugins function (reset to initial state)
 function clearPlugins() {
-  document.querySelectorAll('#plugin-list input:checked').forEach(checkbox => {
-    checkbox.checked = false;
-  });
-  updateDemo();
-}
-
-// Event listeners
-[directionSelect, gapInput, proportionsInput, stackInput, wrapCheckbox].forEach(el => {
-  el.addEventListener('change', updateDemo);
-});
-pluginList.addEventListener('change', updateDemo);
-clearPluginsBtn.addEventListener('click', clearPlugins);
-
-// Initial update
-updateDemo();
+  // Reset inputs to initial values
+  directionSelect.value = initialState.direction;
+  gapInput.value = initialState
