@@ -1,12 +1,10 @@
 // Reordered plugins: visible effects at top, subtle/context-dependent at bottom
 const availablePlugins = [
-  // Visible Effects
   'drag-and-drop', 'hover-effects', 'animation', 'resize-observer', 'layout-transition',
   'infinite-scroll', 'lazy-load', 'scroll-reveal', 'masonry', 'auto-columns',
   'dynamic-spacing', 'breakpoint-preview', 'theme-switch', 'background-switch', 'responsive-text',
   'nested-layouts', 'content-alignment', 'gap-fill', 'order-switch', 'load-balance',
   'rtl-support', 'layout-presets', 'parallax',
-  // Subtle or Context-Dependent
   'equal-heights', 'virtual-scroll', 'content-fit', 'aspect-ratio', 'snap-grid',
   'sticky', 'sticky-headers', 'conditional-visibility', 'overflow-scroll', 'focus-trap',
   'data-binding', 'print-styles', 'breakpoint-sync', 'container-queries', 'motion-path',
@@ -129,6 +127,7 @@ function resetStyles(container) {
   container.style.maxHeight = '400px';
   Array.from(container.children).forEach(child => {
     child.removeAttribute('style');
+    child.style.height = 'auto'; // Ensure height resets to natural content height
     child.style.padding = '20px';
     child.style.textAlign = 'center';
     child.style.borderRadius = '8px';
