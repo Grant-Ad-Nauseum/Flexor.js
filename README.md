@@ -172,18 +172,6 @@ flexor-ai-layout-plugin.js
 flexor-component-export-plugin.js
 
 
-**Contributing**
-
-**We’d love your help! To contribute:
-Fork the repo.**
-
-Clone your fork: git clone https://github.com/Grant-Ad-Nauseum/flexor.js.git.
-
-Edit flexor.js, flexor.css, or add plugins to the plugins subfolder.
-
-Test your changes and submit a pull request.
-
-
 
 **License**
 Flexor.js is released under the MIT License (LICENSE). Use, modify, and share it freely.
