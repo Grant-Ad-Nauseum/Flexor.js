@@ -114,26 +114,34 @@ const Flexor = {
   
   Flexor.registerPlugin('equal-heights', (container, config) => {
     const children = Array.from(container.children);
-    const resizeObserver = new ResizeObserver(() => {
-      resizeObserver.disconnect(); // Prevent loop
-      children.forEach(child => child.style.height = 'auto'); // Reset to natural height
-      const naturalHeights = children.map(child => child.getBoundingClientRect().height);
-      const maxHeight = Math.min(Math.max(...naturalHeights), 400); // Cap at container max-height
-      if (naturalHeights.some(h => h !== maxHeight)) { // Only update if unequal
-        children.forEach(child => child.style.height = `${maxHeight}px`);
-      }
-      children.forEach(child => resizeObserver.observe(child)); // Reconnect
-      resizeObserver.observe(container);
+    const originalFlex = container.style.display;
+    container.style.display = 'block';
+    children.forEach(child => {
+      child.style.height = 'auto';
+      child.style.flex = 'none';
     });
-    resizeObserver.observe(container);
-    children.forEach(child => resizeObserver.observe(child));
-    // Initial call without observer interference
-    children.forEach(child => child.style.height = 'auto');
-    const initialHeights = children.map(child => child.getBoundingClientRect().height);
-    const initialMax = Math.min(Math.max(...initialHeights), 400);
-    if (initialHeights.some(h => h !== initialMax)) {
-      children.forEach(child => child.style.height = `${initialMax}px`);
-    }
+    const naturalHeights = children.map(child => child.getBoundingClientRect().height);
+    const maxHeight = Math.max(...naturalHeights);
+    container.style.display = originalFlex;
+    children.forEach(child => {
+      child.style.height = `${maxHeight}px`;
+      child.style.minHeight = `${maxHeight}px`;
+      child.style.maxHeight = `${maxHeight}px`;
+      child.style.flex = config.proportions ? `${config.proportions[children.indexOf(child)] || 1} 1 0` : '1 1 0';
+    });
+    const mutationObserver = new MutationObserver(() => {
+      container.style.display = 'block';
+      children.forEach(child => child.style.height = 'auto');
+      const newHeights = children.map(child => child.getBoundingClientRect().height);
+      const newMax = Math.max(...newHeights);
+      container.style.display = originalFlex;
+      children.forEach(child => {
+        child.style.height = `${newMax}px`;
+        child.style.minHeight = `${newMax}px`;
+        child.style.maxHeight = `${newMax}px`;
+      });
+    });
+    mutationObserver.observe(container, { childList: true, subtree: true, characterData: true });
   });
   
   Flexor.registerPlugin('infinite-scroll', (container, config) => {
