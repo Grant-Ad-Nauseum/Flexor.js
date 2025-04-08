@@ -181,9 +181,12 @@ Flexor.js is released under the MIT License (LICENSE). Use, modify, and share it
 
 
 Get Involved
+
 Issues: Report bugs or request features here.
 
+
 Discussions: Join us here.
+
 
 Star: Like what you see? Star the repo!
 
