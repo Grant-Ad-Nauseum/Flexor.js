@@ -4,7 +4,7 @@ GitHub release v0.0.1 - 6.5KB - MIT License
 
 _Flexor.js is a lightweight, extensible layout library that enhances CSS Flexbox with a simple, 
 attribute-driven API and a robust plugin system. Built for developers who want control without complexity, 
-Flexor delivers responsive, dynamic layouts using just two files—flexor.js and 
+Flexor delivers responsive, dynamic layouts using just two files; flexor.js and 
 flexor.css—packed with 50 powerful plugins for responsiveness, interactivity, accessibility, and more.
 Streamline your layouts with a tool that’s as flexible as you are._
 
