@@ -1,4 +1,3 @@
-// Reordered plugins: visible effects at top, subtle/context-dependent at bottom
 const availablePlugins = [
   'drag-and-drop', 'hover-effects', 'animation', 'resize-observer', 'layout-transition',
   'infinite-scroll', 'lazy-load', 'scroll-reveal', 'masonry', 'auto-columns',
@@ -13,7 +12,6 @@ const availablePlugins = [
   'ssr-prep', 'layout-debug'
 ];
 
-// Plugin descriptions for tooltips
 const pluginDescriptions = {
   'drag-and-drop': 'Enables dragging to reorder items.',
   'hover-effects': 'Scales items on hover.',
@@ -67,7 +65,6 @@ const pluginDescriptions = {
   'layout-debug': 'Toggles debug outlines (Ctrl+D).'
 };
 
-// Initial state
 const initialState = {
   direction: 'row',
   gap: '10px',
@@ -82,7 +79,6 @@ const initialState = {
   `
 };
 
-// Populate plugin checkboxes with tooltips
 const pluginList = document.getElementById('plugin-list');
 availablePlugins.forEach(plugin => {
   const label = document.createElement('label');
@@ -101,7 +97,6 @@ availablePlugins.forEach(plugin => {
   pluginList.appendChild(label);
 });
 
-// Elements
 const demoContainer = document.getElementById('demo-container');
 const directionSelect = document.getElementById('direction');
 const gapInput = document.getElementById('gap');
@@ -111,7 +106,6 @@ const wrapCheckbox = document.getElementById('wrap');
 const configOutput = document.getElementById('config-output');
 const clearPluginsBtn = document.getElementById('clear-plugins');
 
-// Reset styles function
 function resetStyles(container) {
   container.removeAttribute('style');
   container.style.display = 'flex';
@@ -127,7 +121,7 @@ function resetStyles(container) {
   container.style.maxHeight = '400px';
   Array.from(container.children).forEach(child => {
     child.removeAttribute('style');
-    child.style.height = 'auto'; // Ensure height resets to natural content height
+    child.style.height = 'auto';
     child.style.padding = '20px';
     child.style.textAlign = 'center';
     child.style.borderRadius = '8px';
@@ -137,7 +131,6 @@ function resetStyles(container) {
   });
 }
 
-// Update function
 function updateDemo() {
   resetStyles(demoContainer);
   let config = ['flex', directionSelect.value];
@@ -155,16 +148,21 @@ function updateDemo() {
   Flexor.applyTo(demoContainer);
 }
 
-// Clear plugins function (refresh page)
-clearPluginsBtn.addEventListener('click', () => {
-  window.location.reload();
+clearPluginsBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  window.location.reload(true);
 });
 
-// Event listeners
+document.addEventListener('DOMContentLoaded', () => {
+  clearPluginsBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.reload(true);
+  });
+});
+
 [directionSelect, gapInput, proportionsInput, stackInput, wrapCheckbox].forEach(el => {
   el.addEventListener('change', updateDemo);
 });
 pluginList.addEventListener('change', updateDemo);
 
-// Initial update
 updateDemo();
