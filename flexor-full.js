@@ -71,31 +71,40 @@ const Flexor = {
     const visibleItems = Math.ceil(container.offsetHeight / itemHeight) + 2;
     const totalItems = 100;
     let startIndex = 0;
+    let virtualContainer = container.querySelector('.virtual-scroll-container');
+  
+    // Create virtual container if it doesn’t exist
+    if (!virtualContainer) {
+      virtualContainer = document.createElement('div');
+      virtualContainer.className = 'virtual-scroll-container';
+      virtualContainer.style.position = 'relative';
+      virtualContainer.style.height = `${totalItems * itemHeight}px`; // Total scrollable height
+      container.appendChild(virtualContainer);
+    }
   
     container.style.overflowY = 'auto';
-    container.style.height = '200px';
-    container.style.position = 'relative';
   
     const renderItems = () => {
-      container.innerHTML = '';
+      virtualContainer.innerHTML = ''; // Clear only virtual items
       const endIndex = Math.min(startIndex + visibleItems, totalItems);
       for (let i = startIndex; i < endIndex; i++) {
         const item = document.createElement('div');
-        item.textContent = `Item ${i + 1}`;
+        item.textContent = `Virtual Item ${i + 1}`;
         item.style.height = `${itemHeight}px`;
         item.style.background = i % 2 ? '#eee' : '#fff';
         item.style.position = 'absolute';
         item.style.top = `${i * itemHeight}px`;
         item.style.width = '100%';
-        container.appendChild(item);
+        virtualContainer.appendChild(item);
       }
-      container.style.height = `${totalItems * itemHeight}px`;
     };
   
-    container.addEventListener('scroll', () => {
+    const scrollHandler = () => {
       startIndex = Math.floor(container.scrollTop / itemHeight);
       renderItems();
-    });
+    };
+  
+    container.addEventListener('scroll', scrollHandler);
     renderItems();
   });
   
@@ -112,8 +121,10 @@ const Flexor = {
   Flexor.registerPlugin('equal-heights', (container, config) => {
     const children = Array.from(container.children);
     const resizeObserver = new ResizeObserver(() => {
-      children.forEach(child => child.style.height = 'auto'); // Reset to natural height first
-      const maxHeight = Math.max(...children.map(child => child.offsetHeight));
+      // Reset heights to natural size to prevent infinite growth
+      children.forEach(child => child.style.height = 'auto');
+      // Use clientHeight (content + padding, no margins) for accurate max height
+      const maxHeight = Math.max(...children.map(child => child.clientHeight));
       children.forEach(child => child.style.height = `${maxHeight}px`);
     });
     resizeObserver.observe(container);
@@ -239,11 +250,8 @@ const Flexor = {
   // 14. Aspect Ratio
   Flexor.registerPlugin('aspect-ratio', (container, config) => {
     Array.from(container.children).forEach(child => {
-      child.style.aspectRatio = '1 / 1';
-      const observer = new ResizeObserver(() => {
-        child.style.height = `${child.offsetWidth}px`;
-      });
-      observer.observe(child);
+      child.style.aspectRatio = '1 / 1'; // Set 1:1 aspect ratio via CSS
+      // No ResizeObserver needed; CSS handles height based on width
     });
   });
   
