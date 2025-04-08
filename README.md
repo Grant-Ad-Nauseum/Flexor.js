@@ -175,6 +175,7 @@ flexor-component-export-plugin.js
 
 
 **License**
+
 Flexor.js is released under the MIT License (LICENSE). Use, modify, and share it freely.
 
 
