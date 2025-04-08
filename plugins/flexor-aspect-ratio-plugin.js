@@ -1,10 +1,6 @@
 Flexor.registerPlugin('aspect-ratio', (container, config) => {
   Array.from(container.children).forEach(child => {
-    child.style.aspectRatio = '1 / 1';
-    child.style.maxWidth = '200px'; // Constrain width
-    const observer = new ResizeObserver(() => {
-      child.style.height = `${child.offsetWidth}px`;
-    });
-    observer.observe(child);
+    child.style.aspectRatio = '1 / 1'; // Set 1:1 aspect ratio via CSS
+    // No ResizeObserver needed; CSS handles height based on width
   });
 });
