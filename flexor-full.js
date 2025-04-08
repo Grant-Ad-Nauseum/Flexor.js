@@ -115,6 +115,7 @@ const Flexor = {
   Flexor.registerPlugin('equal-heights', (container, config) => {
     const children = Array.from(container.children);
     
+    // Measure intrinsic height in sandbox
     const sandbox = document.createElement('div');
     sandbox.style.position = 'absolute';
     sandbox.style.visibility = 'hidden';
@@ -133,16 +134,18 @@ const Flexor = {
     const maxHeight = Math.max(...naturalHeights);
     sandbox.remove();
     
+    // Apply fixed heights and prevent stretching
+    container.style.alignItems = 'flex-start'; // Stop stretch in row mode
     children.forEach((child, i) => {
       child.style.height = `${maxHeight}px`;
-      child.style.minHeight = `${maxHeight}px`;
       child.style.maxHeight = `${maxHeight}px`;
       child.style.flex = config.proportions 
         ? `${config.proportions[i] || 1} 0 ${maxHeight}px`
         : `1 0 ${maxHeight}px`;
-      child.style.boxSizing = 'border-box';
+      child.style.overflow = 'hidden'; // Cap content overflow
     });
     
+    // Enforce via CSS to override demo resets
     const styleId = `equal-heights-fix-${container.id || 'demo-container'}`;
     let style = document.getElementById(styleId);
     if (!style) {
@@ -151,12 +154,15 @@ const Flexor = {
       document.head.appendChild(style);
     }
     style.textContent = `
+      #${container.id || 'demo-container'} {
+        align-items: flex-start !important;
+      }
       #${container.id || 'demo-container'} > .demo-item {
         height: ${maxHeight}px !important;
-        min-height: ${maxHeight}px !important;
         max-height: ${maxHeight}px !important;
         flex-grow: 0 !important;
         flex-shrink: 0 !important;
+        overflow: hidden !important;
       }
     `;
   });
