@@ -115,7 +115,7 @@ const Flexor = {
   Flexor.registerPlugin('equal-heights', (container, config) => {
     const children = Array.from(container.children);
     
-    // Measure intrinsic height in sandbox
+    // Measure intrinsic height
     const sandbox = document.createElement('div');
     sandbox.style.position = 'absolute';
     sandbox.style.visibility = 'hidden';
@@ -134,19 +134,22 @@ const Flexor = {
     const maxHeight = Math.max(...naturalHeights);
     sandbox.remove();
     
-    // Apply fixed heights and prevent stretching
-    container.style.alignItems = 'flex-start'; // Stop stretch in row mode
+    // Lock container and children
+    container.style.height = `${maxHeight}px`; // Match tallest child
+    container.style.maxHeight = `${maxHeight}px`;
+    container.style.alignItems = 'flex-start';
+    container.style.overflow = 'hidden'; // No scrolling
     children.forEach((child, i) => {
       child.style.height = `${maxHeight}px`;
       child.style.maxHeight = `${maxHeight}px`;
       child.style.flex = config.proportions 
         ? `${config.proportions[i] || 1} 0 ${maxHeight}px`
         : `1 0 ${maxHeight}px`;
-      child.style.overflow = 'hidden'; // Cap content overflow
+      child.style.overflow = 'hidden';
     });
     
-    // Enforce via CSS to override demo resets
-    const styleId = `equal-heights-fix-${container.id || 'demo-container'}`;
+    // Override all flex resets with CSS
+    const styleId = `equal-heights-lock-${container.id || 'demo-container'}`;
     let style = document.getElementById(styleId);
     if (!style) {
       style = document.createElement('style');
@@ -155,18 +158,20 @@ const Flexor = {
     }
     style.textContent = `
       #${container.id || 'demo-container'} {
+        height: ${maxHeight}px !important;
+        max-height: ${maxHeight}px !important;
         align-items: flex-start !important;
+        overflow: hidden !important;
       }
       #${container.id || 'demo-container'} > .demo-item {
         height: ${maxHeight}px !important;
         max-height: ${maxHeight}px !important;
-        flex-grow: 0 !important;
-        flex-shrink: 0 !important;
+        flex: ${config.proportions ? config.proportions.map(p => `${p} 0 ${maxHeight}px`).join(', ') : `1 0 ${maxHeight}px`} !important;
         overflow: hidden !important;
       }
     `;
   });
-
+  
   Flexor.registerPlugin('infinite-scroll', (container, config) => {
     let itemCount = container.children.length;
     container.style.overflowY = 'auto';
