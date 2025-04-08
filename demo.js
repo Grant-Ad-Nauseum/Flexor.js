@@ -150,13 +150,13 @@ function updateDemo() {
 
 clearPluginsBtn.addEventListener('click', (e) => {
   e.preventDefault();
-  window.location.reload(true);
+  setTimeout(() => window.location.replace(window.location.href), 100);
 });
 
 document.addEventListener('DOMContentLoaded', () => {
   clearPluginsBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    window.location.reload(true);
+    setTimeout(() => window.location.replace(window.location.href), 100);
   });
 });
 
