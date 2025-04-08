@@ -5,54 +5,199 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Flexor.js Demo - Grant-Ad-Nauseum</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Grant-Ad-Nauseum/flexor.js@latest/flexor.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    #demo-container { border: 2px dashed #ccc; padding: 10px; margin-bottom: 20px; resize: horizontal; overflow: auto; width: 600px; min-height: 200px; }
-    .demo-item { padding: 20px; text-align: center; }
-    #controls { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    #plugin-list { max-height: 400px; overflow-y: auto; }
-    label { display: block; margin: 5px 0; }
-    #config-output { font-family: monospace; white-space: pre-wrap; background: #f5f5f5; padding: 10px; }
+    :root {
+      --bg-color: #f9fafb;
+      --text-color: #1f2937;
+      --card-bg: #ffffff;
+      --border-color: #e5e7eb;
+      --accent-color: #3b82f6;
+      --hover-color: #2563eb;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 40px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0;
+      color: var(--accent-color);
+    }
+    header p {
+      font-size: 1.1rem;
+      color: #6b7280;
+      max-width: 600px;
+      margin: 10px auto 0;
+    }
+    #demo-container {
+      background: var(--card-bg);
+      border: 2px dashed var(--border-color);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      resize: horizontal;
+      overflow: auto;
+      width: 100%;
+      min-height: 200px;
+      transition: all 0.3s ease;
+    }
+    .demo-item {
+      padding: 20px;
+      text-align: center;
+      border-radius: 8px;
+      transition: transform 0.2s ease;
+    }
+    .demo-item:hover {
+      transform: scale(1.05);
+    }
+    #controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-top: 30px;
+    }
+    .panel {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 0 0 15px;
+      color: var(--text-color);
+    }
+    label {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+      font-size: 0.95rem;
+      color: #4b5563;
+    }
+    select, input[type="text"], input[type="checkbox"] {
+      margin-left: 10px;
+      padding: 8px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 0.9rem;
+      transition: border-color 0.2s ease;
+    }
+    select:focus, input[type="text"]:focus {
+      border-color: var(--accent-color);
+      outline: none;
+    }
+    #plugin-list {
+      max-height: 400px;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+    #plugin-list label {
+      padding: 8px;
+      border-radius: 6px;
+      transition: background 0.2s ease;
+    }
+    #plugin-list label:hover {
+      background: #f1f5f9;
+    }
+    button {
+      background: var(--accent-color);
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    button:hover {
+      background: var(--hover-color);
+    }
+    #clear-plugins {
+      background: #ef4444;
+      margin-top: 15px;
+    }
+    #clear-plugins:hover {
+      background: #dc2626;
+    }
+    #config-section {
+      margin-top: 40px;
+      text-align: center;
+    }
+    #config-output {
+      background: #f3f4f6;
+      padding: 15px;
+      border-radius: 8px;
+      font-family: monospace;
+      color: #374151;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+      max-width: 600px;
+      margin: 15px auto 0;
+    }
   </style>
 </head>
 <body>
-  <h1>Flexor.js Interactive Demo</h1>
-  <p>Toggle any of the 50 plugins and adjust settings to see Flexor in action! Uses <code>flexor-full.js</code> (all plugins included). Get the lightweight <code>flexor.js</code> from the repo.</p>
+  <div class="container">
+    <header>
+      <h1>Flexor.js Demo</h1>
+      <p>Explore 50 powerful plugins with this interactive demo powered by <code>flexor-full.js</code>. Download the lightweight <code>flexor.js</code> from <a href="https://github.com/Grant-Ad-Nauseum/flexor.js">GitHub</a> and customize it!</p>
+    </header>
 
-  <div id="demo-container" data-flexor="flex row gap-10px">
-    <div class="demo-item" style="background: lightblue;">Item 1</div>
-    <div class="demo-item" style="background: lightgreen;">Item 2</div>
-    <div class="demo-item" style="background: lightcoral;">Item 3</div>
-  </div>
-
-  <div id="controls">
-    <div>
-      <h2>Settings</h2>
-      <label>Direction:
-        <select id="direction">
-          <option value="row">Row</option>
-          <option value="col">Column</option>
-        </select>
-      </label>
-      <label>Gap:
-        <input id="gap" type="text" value="10px" placeholder="e.g., 10px">
-      </label>
-      <label>Proportions:
-        <input id="proportions" type="text" value="1 1 1" placeholder="e.g., 1 2 1">
-      </label>
-      <label>Stack At:
-        <input id="stack" type="text" value="" placeholder="e.g., 500px">
-      </label>
-      <label><input id="wrap" type="checkbox"> Wrap</label>
+    <div id="demo-container" data-flexor="flex row gap-10px">
+      <div class="demo-item" style="background: #60a5fa;">Item 1</div>
+      <div class="demo-item" style="background: #34d399;">Item 2</div>
+      <div class="demo-item" style="background: #f87171;">Item 3</div>
     </div>
-    <div id="plugin-list">
-      <h2>Plugins (50 Total)</h2>
-      <!-- Checkboxes added dynamically -->
+
+    <div id="controls">
+      <div class="panel">
+        <h2>Settings</h2>
+        <label>Direction:
+          <select id="direction">
+            <option value="row">Row</option>
+            <option value="col">Column</option>
+          </select>
+        </label>
+        <label>Gap:
+          <input id="gap" type="text" value="10px" placeholder="e.g., 10px">
+        </label>
+        <label>Proportions:
+          <input id="proportions" type="text" value="1 1 1" placeholder="e.g., 1 2 1">
+        </label>
+        <label>Stack At:
+          <input id="stack" type="text" value="" placeholder="e.g., 500px">
+        </label>
+        <label>Wrap: <input id="wrap" type="checkbox"></label>
+      </div>
+      <div class="panel">
+        <h2>Plugins (50 Total)</h2>
+        <div id="plugin-list">
+          <!-- Checkboxes added dynamically -->
+        </div>
+        <button id="clear-plugins">Clear Plugins</button>
+      </div>
+    </div>
+
+    <div id="config-section">
+      <h2>Current Config</h2>
+      <div id="config-output">data-flexor="flex row gap-10px"</div>
     </div>
   </div>
-
-  <h2>Current Config</h2>
-  <div id="config-output">data-flexor="flex row gap-10px"</div>
 
   <script src="https://cdn.jsdelivr.net/gh/Grant-Ad-Nauseum/flexor.js@latest/flexor-full.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/Grant-Ad-Nauseum/flexor.js@latest/demo.js"></script>
