@@ -39,7 +39,6 @@ const Flexor = {
     }
   };
   
-  // 1. Nested Layouts
   Flexor.registerPlugin('nested-layouts', (container, config) => {
     const nestedContainers = container.querySelectorAll('[data-flexor]');
     nestedContainers.forEach(nested => {
@@ -47,7 +46,6 @@ const Flexor = {
     });
   });
   
-  // 2. Resize Observer
   Flexor.registerPlugin('resize-observer', (container, config) => {
     const observer = new ResizeObserver(() => {
       const width = container.offsetWidth;
@@ -65,27 +63,25 @@ const Flexor = {
     observer.observe(container);
   });
   
-  // 3. Virtual Scroll
   Flexor.registerPlugin('virtual-scroll', (container, config) => {
     const itemHeight = 50;
     const visibleItems = Math.ceil(container.offsetHeight / itemHeight) + 2;
     const totalItems = 100;
     let startIndex = 0;
     let virtualContainer = container.querySelector('.virtual-scroll-container');
-  
-    // Create virtual container if it doesn’t exist
+
     if (!virtualContainer) {
       virtualContainer = document.createElement('div');
       virtualContainer.className = 'virtual-scroll-container';
       virtualContainer.style.position = 'relative';
-      virtualContainer.style.height = `${totalItems * itemHeight}px`; // Total scrollable height
+      virtualContainer.style.height = `${totalItems * itemHeight}px`;
       container.appendChild(virtualContainer);
     }
-  
+
     container.style.overflowY = 'auto';
-  
+
     const renderItems = () => {
-      virtualContainer.innerHTML = ''; // Clear only virtual items
+      virtualContainer.innerHTML = '';
       const endIndex = Math.min(startIndex + visibleItems, totalItems);
       for (let i = startIndex; i < endIndex; i++) {
         const item = document.createElement('div');
@@ -98,17 +94,16 @@ const Flexor = {
         virtualContainer.appendChild(item);
       }
     };
-  
+
     const scrollHandler = () => {
       startIndex = Math.floor(container.scrollTop / itemHeight);
       renderItems();
     };
-  
+
     container.addEventListener('scroll', scrollHandler);
     renderItems();
   });
   
-  // 4. Layout Transition
   Flexor.registerPlugin('layout-transition', (container, config) => {
     container.style.transition = 'all 0.3s ease-in-out';
     const observer = new MutationObserver(() => {
@@ -117,13 +112,10 @@ const Flexor = {
     observer.observe(container, { attributes: true, childList: true, subtree: true });
   });
   
-  // 5. Equal Heights
   Flexor.registerPlugin('equal-heights', (container, config) => {
     const children = Array.from(container.children);
     const resizeObserver = new ResizeObserver(() => {
-      // Reset heights to natural size to prevent infinite growth
       children.forEach(child => child.style.height = 'auto');
-      // Use clientHeight (content + padding, no margins) for accurate max height
       const maxHeight = Math.max(...children.map(child => child.clientHeight));
       children.forEach(child => child.style.height = `${maxHeight}px`);
     });
@@ -131,7 +123,6 @@ const Flexor = {
     children.forEach(child => resizeObserver.observe(child));
   });
   
-  // 6. Infinite Scroll
   Flexor.registerPlugin('infinite-scroll', (container, config) => {
     let itemCount = container.children.length;
     container.style.overflowY = 'auto';
@@ -149,7 +140,6 @@ const Flexor = {
     });
   });
   
-  // 7. Accessibility Boost
   Flexor.registerPlugin('accessibility-boost', (container, config) => {
     container.setAttribute('role', 'region');
     container.setAttribute('aria-label', 'Flexor layout');
@@ -163,7 +153,6 @@ const Flexor = {
     });
   });
   
-  // 8. Content Fit
   Flexor.registerPlugin('content-fit', (container, config) => {
     const resizeObserver = new ResizeObserver(() => {
       const maxWidth = Math.max(...Array.from(container.children).map(c => c.scrollWidth));
@@ -174,7 +163,6 @@ const Flexor = {
     resizeObserver.observe(container);
   });
   
-  // 9. Auto Columns
   Flexor.registerPlugin('auto-columns', (container, config) => {
     container.style.flexWrap = 'wrap';
     container.style.maxWidth = '600px';
@@ -188,7 +176,6 @@ const Flexor = {
     observer.observe(container);
   });
   
-  // 10. Drag and Drop
   Flexor.registerPlugin('drag-and-drop', (container, config) => {
     const children = Array.from(container.children);
     children.forEach(child => {
@@ -207,7 +194,6 @@ const Flexor = {
     children.forEach((child, i) => child.dataset.index = i);
   });
   
-  // 11. Lazy Load
   Flexor.registerPlugin('lazy-load', (container, config) => {
     const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
@@ -226,7 +212,6 @@ const Flexor = {
     });
   });
   
-  // 12. Dynamic Spacing
   Flexor.registerPlugin('dynamic-spacing', (container, config) => {
     const observer = new ResizeObserver(() => {
       const width = container.offsetWidth;
@@ -236,7 +221,6 @@ const Flexor = {
     observer.observe(container);
   });
   
-  // 13. Breakpoint Preview
   Flexor.registerPlugin('breakpoint-preview', (container, config) => {
     const breakpoints = { sm: 600, md: 900, lg: 1200 };
     const updateBorder = () => {
@@ -247,15 +231,12 @@ const Flexor = {
     updateBorder();
   });
   
-  // 14. Aspect Ratio
   Flexor.registerPlugin('aspect-ratio', (container, config) => {
     Array.from(container.children).forEach(child => {
-      child.style.aspectRatio = '1 / 1'; // Set 1:1 aspect ratio via CSS
-      // No ResizeObserver needed; CSS handles height based on width
+      child.style.aspectRatio = '1 / 1';
     });
   });
   
-  // 15. Conditional Visibility
   Flexor.registerPlugin('conditional-visibility', (container, config) => {
     const observer = new ResizeObserver(() => {
       container.style.display = container.offsetWidth < 300 ? 'none' : 'flex';
@@ -263,27 +244,23 @@ const Flexor = {
     observer.observe(container);
   });
   
-  // 16. Overflow Scroll
   Flexor.registerPlugin('overflow-scroll', (container, config) => {
     container.style.overflowX = 'auto';
     container.style.whiteSpace = 'nowrap';
     Array.from(container.children).forEach(child => child.style.display = 'inline-block');
   });
   
-  // 17. Content Alignment
   Flexor.registerPlugin('content-alignment', (container, config) => {
     container.style.justifyContent = 'center';
     container.style.alignItems = 'center';
   });
   
-  // 18. Sticky
   Flexor.registerPlugin('sticky', (container, config) => {
     container.style.position = 'sticky';
     container.style.top = '0';
     container.style.zIndex = '10';
   });
   
-  // 19. Sticky Headers
   Flexor.registerPlugin('sticky-headers', (container, config) => {
     const firstChild = container.children[0];
     if (firstChild) {
@@ -294,7 +271,6 @@ const Flexor = {
     }
   });
   
-  // 20. Gap Fill
   Flexor.registerPlugin('gap-fill', (container, config) => {
     container.style.gap = '0';
     Array.from(container.children).forEach(child => {
@@ -302,14 +278,12 @@ const Flexor = {
     });
   });
   
-  // 21. Order Switch
   Flexor.registerPlugin('order-switch', (container, config) => {
     Array.from(container.children).forEach((child, i) => {
       child.style.order = i % 2 ? -1 : 0;
     });
   });
   
-  // 22. Scroll Reveal
   Flexor.registerPlugin('scroll-reveal', (container, config) => {
     const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
@@ -328,7 +302,6 @@ const Flexor = {
     });
   });
   
-  // 23. Animation
   Flexor.registerPlugin('animation', (container, config) => {
     Array.from(container.children).forEach(child => {
       child.animate([
@@ -339,14 +312,12 @@ const Flexor = {
     });
   });
   
-  // 24. Masonry
   Flexor.registerPlugin('masonry', (container, config) => {
     container.style.display = 'grid';
     container.style.gridTemplateColumns = 'repeat(auto-fill, minmax(100px, 1fr))';
     container.style.gap = config.gap || '10px';
   });
   
-  // 25. Focus Trap
   Flexor.registerPlugin('focus-trap', (container, config) => {
     const focusable = Array.from(container.querySelectorAll('a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])'));
     if (focusable.length) {
@@ -366,7 +337,6 @@ const Flexor = {
     }
   });
   
-  // 26. Data Binding
   Flexor.registerPlugin('data-binding', (container, config) => {
     container.dataset.value = 'bound';
     Array.from(container.children).forEach(child => {
@@ -376,7 +346,6 @@ const Flexor = {
     });
   });
   
-  // 27. Snap Grid
   Flexor.registerPlugin('snap-grid', (container, config) => {
     container.style.overflowX = 'auto';
     container.style.scrollSnapType = 'x mandatory';
@@ -386,20 +355,17 @@ const Flexor = {
     });
   });
   
-  // 28. Load Balance
   Flexor.registerPlugin('load-balance', (container, config) => {
     container.style.display = 'grid';
     container.style.gridAutoFlow = 'dense';
     container.style.gridTemplateColumns = 'repeat(auto-fill, minmax(150px, 1fr))';
   });
   
-  // 29. RTL Support
   Flexor.registerPlugin('rtl-support', (container, config) => {
     container.style.direction = 'rtl';
     container.style.textAlign = 'right';
   });
   
-  // 30. Theme Switch
   Flexor.registerPlugin('theme-switch', (container, config) => {
     const toggle = document.createElement('button');
     toggle.textContent = 'Toggle Theme';
@@ -416,7 +382,6 @@ const Flexor = {
     });
   });
   
-  // 31. Error Boundary
   Flexor.registerPlugin('error-boundary', (container, config) => {
     try {
       Flexor.applyTo(container);
@@ -425,14 +390,12 @@ const Flexor = {
     }
   });
   
-  // 32. Print Styles
   Flexor.registerPlugin('print-styles', (container, config) => {
     const style = document.createElement('style');
     style.textContent = `@media print { #${container.id || 'demo-container'} { flex-direction: column; gap: 10px; } }`;
     document.head.appendChild(style);
   });
   
-  // 33. Undo Redo
   Flexor.registerPlugin('undo-redo', (container, config) => {
     let history = [container.innerHTML];
     let historyIndex = 0;
@@ -454,7 +417,6 @@ const Flexor = {
     });
   });
   
-  // 34. Layout Presets
   Flexor.registerPlugin('layout-presets', (container, config) => {
     const preset = document.createElement('select');
     preset.innerHTML = `
@@ -473,7 +435,6 @@ const Flexor = {
     });
   });
   
-  // 35. Parallax
   Flexor.registerPlugin('parallax', (container, config) => {
     container.style.overflowY = 'auto';
     container.style.height = '200px';
@@ -486,7 +447,6 @@ const Flexor = {
     });
   });
   
-  // 36. Voice Control
   Flexor.registerPlugin('voice-control', (container, config) => {
     if ('webkitSpeechRecognition' in window) {
       const recognition = new webkitSpeechRecognition();
@@ -501,7 +461,6 @@ const Flexor = {
     }
   });
   
-  // 37. Responsive Text
   Flexor.registerPlugin('responsive-text', (container, config) => {
     const observer = new ResizeObserver(() => {
       const width = container.offsetWidth;
@@ -513,7 +472,6 @@ const Flexor = {
     observer.observe(container);
   });
   
-  // 38. Hover Effects
   Flexor.registerPlugin('hover-effects', (container, config) => {
     Array.from(container.children).forEach(child => {
       child.style.transition = 'transform 0.3s';
@@ -522,7 +480,6 @@ const Flexor = {
     });
   });
   
-  // 39. Background Switch
   Flexor.registerPlugin('background-switch', (container, config) => {
     const colors = ['#f0f0f0', '#e0e0ff', '#ffe0e0', '#e0ffe0'];
     let index = 0;
@@ -532,11 +489,10 @@ const Flexor = {
     });
   });
   
-  // 40. Collaborative Edit
   Flexor.registerPlugin('collaborative-edit', (container, config) => {
     let socket;
     if (typeof WebSocket !== 'undefined') {
-      socket = new WebSocket('wss://example.com/flexor-collab'); // Replace with real server if needed
+      socket = new WebSocket('wss://example.com/flexor-collab');
       socket.onmessage = event => {
         container.innerHTML = event.data;
         Flexor.applyTo(container);
@@ -547,7 +503,6 @@ const Flexor = {
     }
   });
   
-  // 41. Breakpoint Sync
   Flexor.registerPlugin('breakpoint-sync', (container, config) => {
     const updateBreakpoints = () => {
       const rootStyles = getComputedStyle(document.documentElement);
@@ -562,7 +517,6 @@ const Flexor = {
     updateBreakpoints();
   });
   
-  // 42. Layout Debug
   Flexor.registerPlugin('layout-debug', (container, config) => {
     document.addEventListener('keydown', e => {
       if (e.ctrlKey && e.key === 'd') {
@@ -574,7 +528,6 @@ const Flexor = {
     });
   });
   
-  // 43. Container Queries
   Flexor.registerPlugin('container-queries', (container, config) => {
     container.style.containerType = 'inline-size';
     const style = document.createElement('style');
@@ -588,7 +541,6 @@ const Flexor = {
     document.head.appendChild(style);
   });
   
-  // 44. Perf Monitor
   Flexor.registerPlugin('perf-monitor', (container, config) => {
     const start = performance.now();
     Flexor.applyTo(container);
@@ -602,7 +554,6 @@ const Flexor = {
     container.appendChild(perfDiv);
   });
   
-  // 45. State Manager
   Flexor.registerPlugin('state-manager', (container, config) => {
     const saveState = () => localStorage.setItem('flexor-state', container.innerHTML);
     const loadState = () => {
@@ -614,7 +565,6 @@ const Flexor = {
     loadState();
   });
   
-  // 46. Offline Cache
   Flexor.registerPlugin('offline-cache', (container, config) => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/flexor-sw.js').then(reg => {
@@ -630,7 +580,6 @@ const Flexor = {
     }
   });
   
-  // 47. Motion Path
   Flexor.registerPlugin('motion-path', (container, config) => {
     const children = Array.from(container.children);
     children.forEach(child => {
@@ -645,7 +594,6 @@ const Flexor = {
     container.style.height = '200px';
   });
   
-  // 48. SSR Prep
   Flexor.registerPlugin('ssr-prep', (container, config) => {
     const style = document.createElement('style');
     const id = `flexor-ssr-${Math.random().toString(36).slice(2)}`;
@@ -666,7 +614,6 @@ const Flexor = {
     Flexor.applyTo(container);
   });
   
-  // 49. AI Layout
   Flexor.registerPlugin('ai-layout', (container, config) => {
     const children = Array.from(container.children);
     const updateLayout = () => {
@@ -687,7 +634,6 @@ const Flexor = {
     new MutationObserver(updateLayout).observe(container, { childList: true, subtree: true });
   });
   
-  // 50. Component Export
   Flexor.registerPlugin('component-export', (container, config) => {
     const exportBtn = document.createElement('button');
     exportBtn.textContent = 'Export Layout';
@@ -713,5 +659,4 @@ const Flexor = {
     });
   });
   
-  // Apply Flexor to all containers
   document.querySelectorAll('[data-flexor]').forEach(container => Flexor.applyTo(container));
