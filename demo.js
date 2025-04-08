@@ -1,68 +1,72 @@
+// Reordered plugins: visible effects at top, subtle/context-dependent at bottom
 const availablePlugins = [
-  'nested-layouts', 'resize-observer', 'virtual-scroll', 'layout-transition', 'equal-heights',
-  'infinite-scroll', 'accessibility-boost', 'content-fit', 'auto-columns', 'drag-and-drop',
-  'lazy-load', 'dynamic-spacing', 'breakpoint-preview', 'aspect-ratio', 'conditional-visibility',
-  'overflow-scroll', 'content-alignment', 'sticky', 'sticky-headers', 'gap-fill',
-  'order-switch', 'scroll-reveal', 'animation', 'masonry', 'focus-trap',
-  'data-binding', 'snap-grid', 'load-balance', 'rtl-support', 'theme-switch',
-  'error-boundary', 'print-styles', 'undo-redo', 'layout-presets', 'parallax',
-  'voice-control', 'responsive-text', 'hover-effects', 'background-switch', 'collaborative-edit',
-  'breakpoint-sync', 'layout-debug', 'container-queries', 'perf-monitor', 'state-manager',
-  'offline-cache', 'motion-path', 'ssr-prep', 'ai-layout', 'component-export'
+  // Visible Effects
+  'drag-and-drop', 'hover-effects', 'animation', 'resize-observer', 'layout-transition',
+  'infinite-scroll', 'lazy-load', 'scroll-reveal', 'masonry', 'auto-columns',
+  'dynamic-spacing', 'breakpoint-preview', 'theme-switch', 'background-switch', 'responsive-text',
+  'nested-layouts', 'content-alignment', 'gap-fill', 'order-switch', 'load-balance',
+  'rtl-support', 'layout-presets', 'parallax',
+  // Subtle or Context-Dependent
+  'equal-heights', 'virtual-scroll', 'content-fit', 'aspect-ratio', 'snap-grid',
+  'sticky', 'sticky-headers', 'conditional-visibility', 'overflow-scroll', 'focus-trap',
+  'data-binding', 'print-styles', 'breakpoint-sync', 'container-queries', 'motion-path',
+  'ai-layout', 'component-export', 'accessibility-boost', 'error-boundary', 'perf-monitor',
+  'state-manager', 'undo-redo', 'voice-control', 'collaborative-edit', 'offline-cache',
+  'ssr-prep', 'layout-debug'
 ];
 
 // Plugin descriptions for tooltips
 const pluginDescriptions = {
-  'nested-layouts': 'Applies Flexor to nested containers.',
-  'resize-observer': 'Stacks items vertically below 400px width.',
-  'virtual-scroll': 'Renders a virtualized scrolling list.',
-  'layout-transition': 'Adds smooth transitions to layout changes.',
-  'equal-heights': 'Sets all children to the tallest height.',
-  'infinite-scroll': 'Adds more items as you scroll.',
-  'accessibility-boost': 'Enhances accessibility with ARIA roles.',
-  'content-fit': 'Sizes container to fit largest child.',
-  'auto-columns': 'Creates responsive columns based on width.',
   'drag-and-drop': 'Enables dragging to reorder items.',
+  'hover-effects': 'Scales items on hover.',
+  'animation': 'Applies a pulsing scale animation.',
+  'resize-observer': 'Stacks items vertically below 400px width.',
+  'layout-transition': 'Adds smooth transitions to layout changes.',
+  'infinite-scroll': 'Adds more items as you scroll.',
   'lazy-load': 'Fades in items as they enter the viewport.',
+  'scroll-reveal': 'Reveals items as they scroll into view.',
+  'masonry': 'Switches to a masonry grid layout.',
+  'auto-columns': 'Creates responsive columns based on width.',
   'dynamic-spacing': 'Adjusts gap based on container width.',
   'breakpoint-preview': 'Changes border color by width.',
-  'aspect-ratio': 'Forces 1:1 aspect ratio on children.',
-  'conditional-visibility': 'Hides container below 300px width.',
-  'overflow-scroll': 'Enables horizontal scrolling.',
+  'theme-switch': 'Adds a button to toggle themes.',
+  'background-switch': 'Cycles background colors on click.',
+  'responsive-text': 'Scales text size with container width.',
+  'nested-layouts': 'Applies Flexor to nested containers.',
   'content-alignment': 'Centers items horizontally and vertically.',
-  'sticky': 'Makes the container sticky at the top.',
-  'sticky-headers': 'Sticks the first child as a header.',
   'gap-fill': 'Replaces gap with child margins.',
   'order-switch': 'Reverses order of odd-indexed children.',
-  'scroll-reveal': 'Reveals items as they scroll into view.',
-  'animation': 'Applies a pulsing scale animation.',
-  'masonry': 'Switches to a masonry grid layout.',
-  'focus-trap': 'Traps keyboard focus within the container.',
-  'data-binding': 'Syncs child text with container data.',
-  'snap-grid': 'Enables snap scrolling for children.',
   'load-balance': 'Balances items in a dense grid.',
   'rtl-support': 'Switches to right-to-left layout.',
-  'theme-switch': 'Adds a button to toggle themes.',
-  'error-boundary': 'Displays errors if layout fails.',
-  'print-styles': 'Optimizes layout for printing.',
-  'undo-redo': 'Tracks and reverts changes (Ctrl+Z/Y).',
   'layout-presets': 'Adds a dropdown for layout presets.',
   'parallax': 'Applies a parallax scroll effect.',
-  'voice-control': 'Changes layout via voice commands.',
-  'responsive-text': 'Scales text size with container width.',
-  'hover-effects': 'Scales items on hover.',
-  'background-switch': 'Cycles background colors on click.',
-  'collaborative-edit': 'Enables real-time collaborative editing.',
+  'equal-heights': 'Sets all children to the tallest height.',
+  'virtual-scroll': 'Renders a virtualized scrolling list.',
+  'content-fit': 'Sizes container to fit largest child.',
+  'aspect-ratio': 'Forces 1:1 aspect ratio on children.',
+  'snap-grid': 'Enables snap scrolling for children.',
+  'sticky': 'Makes the container sticky at the top.',
+  'sticky-headers': 'Sticks the first child as a header.',
+  'conditional-visibility': 'Hides container below 300px width.',
+  'overflow-scroll': 'Enables horizontal scrolling.',
+  'focus-trap': 'Traps keyboard focus within the container.',
+  'data-binding': 'Syncs child text with container data.',
+  'print-styles': 'Optimizes layout for printing.',
   'breakpoint-sync': 'Syncs layout with CSS breakpoints.',
-  'layout-debug': 'Toggles debug outlines (Ctrl+D).',
   'container-queries': 'Stacks items below 300px container width.',
+  'motion-path': 'Animates items along a curved path.',
+  'ai-layout': 'Adjusts layout based on content weight.',
+  'component-export': 'Exports the layout to clipboard.',
+  'accessibility-boost': 'Enhances accessibility with ARIA roles.',
+  'error-boundary': 'Displays errors if layout fails.',
   'perf-monitor': 'Shows render time in a corner div.',
   'state-manager': 'Saves and restores layout state.',
+  'undo-redo': 'Tracks and reverts changes (Ctrl+Z/Y).',
+  'voice-control': 'Changes layout via voice commands.',
+  'collaborative-edit': 'Enables real-time collaborative editing.',
   'offline-cache': 'Caches content for offline use.',
-  'motion-path': 'Animates items along a curved path.',
   'ssr-prep': 'Generates static CSS for server-side rendering.',
-  'ai-layout': 'Adjusts layout based on content weight.',
-  'component-export': 'Exports the layout to clipboard.'
+  'layout-debug': 'Toggles debug outlines (Ctrl+D).'
 };
 
 // Initial state
@@ -111,17 +115,32 @@ const clearPluginsBtn = document.getElementById('clear-plugins');
 
 // Reset styles function
 function resetStyles(container) {
-  container.removeAttribute('style'); // Clear all inline styles
-  container.style.display = 'flex'; // Reapply base Flexor styles
+  container.removeAttribute('style');
+  container.style.display = 'flex';
+  container.style.padding = '20px';
+  container.style.border = '2px dashed var(--border-color)';
+  container.style.borderRadius = '12px';
+  container.style.background = 'var(--card-bg)';
+  container.style.boxShadow = 'var(--shadow)';
+  container.style.resize = 'horizontal';
+  container.style.overflow = 'auto';
+  container.style.width = '100%';
+  container.style.minHeight = '200px';
+  container.style.maxHeight = '400px';
   Array.from(container.children).forEach(child => {
     child.removeAttribute('style');
-    child.style.background = child.style.background || '#60a5fa'; // Restore initial colors
+    child.style.padding = '20px';
+    child.style.textAlign = 'center';
+    child.style.borderRadius = '8px';
+    child.style.transition = 'transform 0.2s ease';
+    child.style.minWidth = '100px';
+    child.style.background = child.textContent === 'Item 1' ? '#60a5fa' : child.textContent === 'Item 2' ? '#34d399' : '#f87171';
   });
 }
 
 // Update function
 function updateDemo() {
-  resetStyles(demoContainer); // Reset styles before applying new config
+  resetStyles(demoContainer);
   let config = ['flex', directionSelect.value];
   if (gapInput.value) config.push(`gap-${gapInput.value}`);
   if (proportionsInput.value) config = config.concat(proportionsInput.value.split(' ').filter(Boolean));
@@ -137,36 +156,16 @@ function updateDemo() {
   Flexor.applyTo(demoContainer);
 }
 
-// Clear plugins function
-function clearPlugins() {
-  // Reset inputs to initial values
-  directionSelect.value = initialState.direction;
-  gapInput.value = initialState.gap;
-  proportionsInput.value = initialState.proportions;
-  stackInput.value = initialState.stack;
-  wrapCheckbox.checked = initialState.wrap;
-
-  // Uncheck all plugins
-  document.querySelectorAll('#plugin-list input:checked').forEach(checkbox => {
-    checkbox.checked = false;
-  });
-
-  // Reset demo container
-  demoContainer.innerHTML = initialState.html;
-  resetStyles(demoContainer);
-  demoContainer.setAttribute('data-flexor', 'flex row gap-10px');
-  
-  // Reapply Flexor with initial state
-  Flexor.applyTo(demoContainer);
-  configOutput.textContent = `data-flexor="flex row gap-10px"`;
-}
+// Clear plugins function (refresh page)
+clearPluginsBtn.addEventListener('click', () => {
+  window.location.reload();
+});
 
 // Event listeners
 [directionSelect, gapInput, proportionsInput, stackInput, wrapCheckbox].forEach(el => {
   el.addEventListener('change', updateDemo);
 });
 pluginList.addEventListener('change', updateDemo);
-clearPluginsBtn.addEventListener('click', clearPlugins);
 
 // Initial update
 updateDemo();
