@@ -114,22 +114,26 @@ const Flexor = {
   
   Flexor.registerPlugin('equal-heights', (container, config) => {
     const children = Array.from(container.children);
-    let timeout;
-    const updateHeights = () => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        children.forEach(child => child.style.height = 'auto');
-        const heights = children.map(child => child.offsetHeight);
-        const maxHeight = Math.max(...heights);
-        if (heights.some(h => h !== maxHeight)) {
-          children.forEach(child => child.style.height = `${maxHeight}px`);
-        }
-      }, 50);
-    };
-    const resizeObserver = new ResizeObserver(updateHeights);
+    const resizeObserver = new ResizeObserver(() => {
+      resizeObserver.disconnect(); // Prevent loop
+      children.forEach(child => child.style.height = 'auto'); // Reset to natural height
+      const naturalHeights = children.map(child => child.getBoundingClientRect().height);
+      const maxHeight = Math.min(Math.max(...naturalHeights), 400); // Cap at container max-height
+      if (naturalHeights.some(h => h !== maxHeight)) { // Only update if unequal
+        children.forEach(child => child.style.height = `${maxHeight}px`);
+      }
+      children.forEach(child => resizeObserver.observe(child)); // Reconnect
+      resizeObserver.observe(container);
+    });
     resizeObserver.observe(container);
     children.forEach(child => resizeObserver.observe(child));
-    updateHeights();
+    // Initial call without observer interference
+    children.forEach(child => child.style.height = 'auto');
+    const initialHeights = children.map(child => child.getBoundingClientRect().height);
+    const initialMax = Math.min(Math.max(...initialHeights), 400);
+    if (initialHeights.some(h => h !== initialMax)) {
+      children.forEach(child => child.style.height = `${initialMax}px`);
+    }
   });
   
   Flexor.registerPlugin('infinite-scroll', (container, config) => {
