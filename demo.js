@@ -148,16 +148,9 @@ function updateDemo() {
   Flexor.applyTo(demoContainer);
 }
 
-clearPluginsBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  setTimeout(() => window.location.replace(window.location.href), 100);
-});
-
+clearPluginsBtn.addEventListener('click', () => location.reload(true));
 document.addEventListener('DOMContentLoaded', () => {
-  clearPluginsBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    setTimeout(() => window.location.replace(window.location.href), 100);
-  });
+  clearPluginsBtn.addEventListener('click', () => location.reload(true));
 });
 
 [directionSelect, gapInput, proportionsInput, stackInput, wrapCheckbox].forEach(el => {
