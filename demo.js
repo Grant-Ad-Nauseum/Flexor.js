@@ -106,7 +106,7 @@ const wrapCheckbox = document.getElementById('wrap');
 const configOutput = document.getElementById('config-output');
 const clearPluginsBtn = document.getElementById('clear-plugins');
 
-function resetStyles(container) {
+function resetStyles(container, preserveEqualHeights = false) {
   container.removeAttribute('style');
   container.style.display = 'flex';
   container.style.padding = '20px';
@@ -115,11 +115,12 @@ function resetStyles(container) {
   container.style.background = 'var(--card-bg)';
   container.style.boxShadow = 'var(--shadow)';
   container.style.resize = 'horizontal';
-  container.style.overflow = 'auto';
   container.style.width = '100%';
-  container.style.maxHeight = '400px'; // No min-height to avoid forcing stretch
+  
   Array.from(container.children).forEach(child => {
-    child.removeAttribute('style');
+    if (!preserveEqualHeights) {
+      child.removeAttribute('style');
+    }
     child.style.padding = '20px';
     child.style.textAlign = 'center';
     child.style.borderRadius = '8px';
@@ -132,14 +133,15 @@ function resetStyles(container) {
 }
 
 function updateDemo() {
-  resetStyles(demoContainer);
+  const activePlugins = Array.from(document.querySelectorAll('#plugin-list input:checked'))
+    .map(cb => cb.value);
+  resetStyles(demoContainer, activePlugins.includes('equal-heights'));
+  
   let config = ['flex', directionSelect.value];
   if (gapInput.value) config.push(`gap-${gapInput.value}`);
   if (proportionsInput.value) config = config.concat(proportionsInput.value.split(' ').filter(Boolean));
   if (stackInput.value) config.push(`stack-${stackInput.value}`);
   if (wrapCheckbox.checked) config.push('wrap');
-  const activePlugins = Array.from(document.querySelectorAll('#plugin-list input:checked'))
-    .map(cb => cb.value);
   config = config.concat(activePlugins);
 
   const dataFlexor = config.join(' ');
