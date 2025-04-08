@@ -115,7 +115,6 @@ const Flexor = {
   Flexor.registerPlugin('equal-heights', (container, config) => {
     const children = Array.from(container.children);
     
-    // Measure intrinsic height once
     const sandbox = document.createElement('div');
     sandbox.style.position = 'absolute';
     sandbox.style.visibility = 'hidden';
@@ -134,7 +133,6 @@ const Flexor = {
     const maxHeight = Math.max(...naturalHeights);
     sandbox.remove();
     
-    // Lock heights and prevent flex stretching
     children.forEach((child, i) => {
       child.style.height = `${maxHeight}px`;
       child.style.minHeight = `${maxHeight}px`;
@@ -142,10 +140,9 @@ const Flexor = {
       child.style.flex = config.proportions 
         ? `${config.proportions[i] || 1} 0 ${maxHeight}px`
         : `1 0 ${maxHeight}px`;
-      child.style.boxSizing = 'border-box'; // Ensure padding fits within height
+      child.style.boxSizing = 'border-box';
     });
     
-    // Add CSS rule to enforce height stability
     const styleId = `equal-heights-fix-${container.id || 'demo-container'}`;
     let style = document.getElementById(styleId);
     if (!style) {
@@ -163,7 +160,7 @@ const Flexor = {
       }
     `;
   });
-  
+
   Flexor.registerPlugin('infinite-scroll', (container, config) => {
     let itemCount = container.children.length;
     container.style.overflowY = 'auto';
