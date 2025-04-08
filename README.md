@@ -32,8 +32,7 @@ Download flexor.js and flexor.css from the latest release.
 
 Include them in your HTML:
 
-<link rel="stylesheet" href="path/to/flexor.css">
-<script src="path/to/flexor.js"></script>
+![Screenshot from 2025-04-08 03-31-50](https://github.com/user-attachments/assets/5b234ee0-5af6-463c-9198-b722ff70ec44)
 
 
 **Quick Start**
@@ -42,12 +41,8 @@ Create a responsive layout instantly:
 
 -html-
 
+![Screenshot from 2025-04-08 03-32-26](https://github.com/user-attachments/assets/c6676a41-edf9-4c83-a745-05371945eaa6)
 
-<div data-flexor="flex row gap-10px stack-500px">
-  <div style="background: lightblue;">Item 1</div>
-  <div style="background: lightgreen;">Item 2</div>
-  <div style="background: lightcoral;">Item 3</div>
-</div>
 
 flex row: Sets a horizontal Flexbox layout.
 
